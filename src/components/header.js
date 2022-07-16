@@ -9,10 +9,12 @@ export default class Header extends React.Component {
             <AppBar position="static">
                 <Container maxWidth="xl">
                     <Stack direction="row" justifyContent="space-around" alignItems="center">
-                        <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                        <Button sx={{ my: 2, color: 'white', display: 'block' }} href="/courses">
                             Courses
                         </Button>
+                        <a href="/">
                         <img src={Logo} className="h-12"/>
+                        </a>
                         <Avatar>T</Avatar>
                     </Stack>
                 </Container>

@@ -24,7 +24,7 @@ export default class Home extends React.Component {
                         <Stack direction="column" alignItems="center">
                             <Typography variant="h4" color="#FFFFFF" sx={{ mt: 4}}>
                                 Why not start a course? </Typography>
-                            <Button variant="contained" sx={{ mt: 4 }}> Explore Courses </Button>
+                            <Button variant="contained" sx={{ mt: 4 }} href="/courses"> Explore Courses </Button>
                         </Stack>
 
                     </div> :
