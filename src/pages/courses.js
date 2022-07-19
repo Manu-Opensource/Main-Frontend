@@ -2,6 +2,7 @@ import * as React from 'react';
 import Header from '../components/header';
 import List from '../components/list';
 import { Box } from '@mui/material';
+import { ApiRequest } from '../controllers/api';
 
 
 export default class Courses extends React.Component {
@@ -9,22 +10,21 @@ export default class Courses extends React.Component {
         data: undefined
     }
 
-    getData = () => {
-        return [
-            {
-                title: "Coding",
-                buttonText: "View Course"
-            },
-            {
-                title: "Gaming",
-                buttonText: "View Course"
-
-            },
-        ];
+    getData = async () => {
+        let courses = await(await ApiRequest("courses")).json(); 
+        let ret = [];
+        Object.keys(courses).forEach(k => {
+            ret.push({
+                title: courses[k].Name,
+                buttonText: "View Course",
+                href: `/coures/${courses[k].Id}`
+            });
+        });
+        return ret;
     }
 
-    componentDidMount = () => {
-        this.setState({data: this.getData()});
+    componentDidMount = async () => {
+        this.setState({data: await this.getData()});
     }
 
     render = () => {

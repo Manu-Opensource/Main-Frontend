@@ -15,7 +15,7 @@ export default class List extends React.Component {
                             <Typography variant="h5" color="#FFFFFF" sx={{ mt: 2 }} >
                                 {listEntry.title}
                             </Typography>
-                            <Button variant="contained" sx={{ mt: 2 }}>{listEntry.buttonText}</Button>
+                            <Button variant="contained" sx={{ mt: 2 }} href={listEntry.href}>{listEntry.buttonText}</Button>
                         </div>
                     );
                 })}
