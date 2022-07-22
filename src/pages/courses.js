@@ -17,7 +17,7 @@ export default class Courses extends React.Component {
             ret.push({
                 title: courses[k].Name,
                 buttonText: "View Course",
-                href: `/coures/${courses[k].Id}`
+                href: `/courses/${courses[k].Id}`
             });
         });
         return ret;
@@ -29,12 +29,12 @@ export default class Courses extends React.Component {
 
     render = () => {
         return (
-            <Box sx={{ backgroundColor: 'background.default', minHeight: window.innerHeight }}>
+            <>
                 <Header/>
                 {this.state.data ? 
                 <List content={this.state.data}/>
                 : <div/>}
-            </Box>
+            </>
         );
     }
 }

@@ -4,6 +4,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Routes, Route, BrowserRouter} from "react-router-dom";
 import Home from './pages/home';
 import Courses from './pages/courses';
+import Course from './pages/course';
 import "./index.css"
 
 
@@ -23,6 +24,7 @@ root.render(
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/courses" element={<Courses/>}/>
+                <Route path="/courses/:courseId" element={<Course/>}/>
             </Routes>
         </BrowserRouter>
       </ThemeProvider>
