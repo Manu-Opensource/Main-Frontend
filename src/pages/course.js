@@ -2,7 +2,7 @@ import * as React from 'react';
 import Header from '../components/header';
 import List from '../components/list';
 import { ApiRequest } from '../controllers/api';
-import { XMLParser } from 'fast-xml-parser';
+import parseXml from '../controllers/xml';
 
 export default class Course extends React.Component {
     state = {
@@ -21,16 +21,16 @@ export default class Course extends React.Component {
             else if (pair.Key === "Lessons") xmlString = pair.Value;
         });
 
-        const parser = new XMLParser();
-        let obj = parser.parse(xmlString);
+        let obj = parseXml(xmlString);
 
+        console.log(obj)
 
         return {
-            lessons: obj.XML.Lessons.Lesson.map(lesson => {
+            lessons: obj.children[0].children.map(lesson => {
                 return {
-                    title: lesson.Name,
+                    title: lesson.attributes.Name,
                     buttonText: "View Lesson",
-                    href: `/lessons/${lesson.Id}`,
+                    href: `/lessons/${lesson.attributes.Id}`,
                 }
             }),
             name: name,
