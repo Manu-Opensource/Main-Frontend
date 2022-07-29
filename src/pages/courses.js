@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Header from '../components/header';
 import List from '../components/list';
-import { Box } from '@mui/material';
 import { ApiRequest } from '../controllers/api';
 
 

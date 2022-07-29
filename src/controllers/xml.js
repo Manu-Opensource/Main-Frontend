@@ -33,7 +33,7 @@ export default function parseXml(xmlString) {
                     attrs[split[i].split("=")[0]] = split[i + 1].trim().substring(1, split[i + 1].trim().length - 1);
                 }
                 let obj = {
-                    name: split[0],
+                    name: split[0].trim(),
                     children: [],
                     attributes: attrs,
                 }
@@ -52,3 +52,4 @@ export default function parseXml(xmlString) {
     }
     return stack[0].children[0];
 }
+
