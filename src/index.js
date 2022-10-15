@@ -7,6 +7,7 @@ import Courses from './pages/courses';
 import Course from './pages/course';
 import Lesson from './pages/lesson';
 import Signup from './pages/signup';
+import Signin from './pages/signin';
 import "./index.css"
 
 
@@ -29,6 +30,7 @@ root.render(
                 <Route path="/courses/:courseId" element={<Course/>}/>
                 <Route path="/lessons/:lessonId" element={<Lesson/>}/>
                 <Route path="/signup" element={<Signup/>}/>
+                <Route path="/signin" element={<Signin/>}/>
             </Routes>
         </BrowserRouter>
       </ThemeProvider>

@@ -13,6 +13,7 @@ export async function ApiRequest (path, args) {
             i++;
         });
     }
+    link = link.replace("#", "_POUNDSIGN_");
     let res = await fetch(link, {credentials: 'include'}).catch(err => {
         console.log(err)
     });

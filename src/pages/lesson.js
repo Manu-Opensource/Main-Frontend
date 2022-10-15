@@ -5,7 +5,8 @@ import { ApiRequest } from '../controllers/api';
 
 export default class Lesson extends React.Component {
     state = {
-        data: undefined
+        data: undefined,
+        user: undefined
     }
 
     getData = async () => {

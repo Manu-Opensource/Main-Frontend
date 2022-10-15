@@ -3,10 +3,12 @@ import Header from '../components/header';
 import List from '../components/list';
 import { ApiRequest } from '../controllers/api';
 import parseXml from '../controllers/xml';
+import { getUserData } from '../controllers/auth';
 
 export default class Course extends React.Component {
     state = {
-        data: undefined
+        data: undefined,
+        user: undefined
     }
     
     getData = async () => {
@@ -38,13 +40,13 @@ export default class Course extends React.Component {
     }
 
     componentDidMount = async () => {
-        this.setState({data: await this.getData()});
+        this.setState({data: await this.getData(), user: await getUserData()});
     }
 
     render = () => {
         return (
             <>
-                <Header/>
+                <Header authenticated={this.state.user ? true : false}/>
                 {this.state.data ?
                 <List content={this.state.data.lessons} />
                 : <div/>}

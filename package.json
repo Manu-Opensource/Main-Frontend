@@ -11,6 +11,7 @@
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@hcaptcha/react-hcaptcha": "^1.4.4",
+    "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.8.7",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@rgrove/parse-xml": "^3.0.0",
