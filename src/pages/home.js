@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Header from '../components/header';
 import { Stack, Typography, Box, Button } from '@mui/material';
+import { getUserData } from '../controllers/auth';
 
 export default class Home extends React.Component {
     state = {
@@ -10,11 +11,15 @@ export default class Home extends React.Component {
         }
     }
 
+    componentDidMount = async () => {
+        this.setState({user: await getUserData()});
+    }
+
 
     render = () => {
         return (
             <Box sx={{ backgroundColor: 'background.default', minHeight: window.innerHeight }}>
-                <Header/>
+                <Header authenticated={this.state.user ? true : false}/>
                 <Stack direction="column" alignItems="center">
                     <Typography variant="h2" color="#FFFFFF" sx={{ mt: 4 }}>
                         Welcome Back {this.state.userData.name}! </Typography>

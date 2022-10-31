@@ -15,17 +15,7 @@ export default class Course extends React.Component {
         let courseId = window.location.href.split("/").at(-1);
         let course = await (await ApiRequest(`course/${courseId}`)).json();
 
-        let name;
-        let xmlString;
-
-        course.forEach(pair => {
-            if (pair.Key === "Name") name = pair.Value;
-            else if (pair.Key === "Lessons") xmlString = pair.Value;
-        });
-
-        let obj = parseXml(xmlString);
-
-        console.log(obj)
+        let obj = parseXml(course.lessons);
 
         return {
             lessons: obj.children[0].children.map(lesson => {
@@ -35,7 +25,7 @@ export default class Course extends React.Component {
                     href: `/lessons/${lesson.attributes.Id}`,
                 }
             }),
-            name: name,
+            name: course.name,
         };
     }
 

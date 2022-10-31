@@ -10,7 +10,7 @@ export default class Signin extends React.Component {
         signinError: null,
     }
 
-    signup = async () => {
+    signin = async () => {
         this.setState({errorEmail: false, errorPassword: false});
         let emailBox = document.getElementById("Email");
         let passwordBox = document.getElementById("Password");
@@ -47,7 +47,7 @@ export default class Signin extends React.Component {
                                 <Typography variant="p" color="#f44336"> {this.state.signinError} </Typography>
                                 </Stack> 
                             </div>
-                            <Button variant="contained" sx={{ mt: 4 }} onClick={this.signup}> Get Coding! </Button>
+                            <Button variant="contained" sx={{ mt: 4 }} onClick={this.signin}> Get Coding! </Button>
                         </Stack>
                     </form>
                 </div>

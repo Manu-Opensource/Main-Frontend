@@ -2,6 +2,7 @@ import * as React from 'react';
 import Header from '../components/header';
 import List from '../components/list';
 import { ApiRequest } from '../controllers/api';
+import { getUserData } from '../controllers/auth';
 
 
 export default class Courses extends React.Component {
@@ -12,24 +13,24 @@ export default class Courses extends React.Component {
     getData = async () => {
         let courses = await(await ApiRequest("courses")).json(); 
         let ret = [];
-        Object.keys(courses).forEach(k => {
+        courses.forEach(course => {
             ret.push({
-                title: courses[k].Name,
+                title: course.name,
                 buttonText: "View Course",
-                href: `/courses/${courses[k].Id}`
+                href: `/courses/${course.id}`
             });
         });
         return ret;
     }
 
     componentDidMount = async () => {
-        this.setState({data: await this.getData()});
+        this.setState({data: await this.getData(), user: await getUserData()});
     }
 
     render = () => {
         return (
             <>
-                <Header/>
+                <Header authenticated={this.state.user ? true : false}/>
                 {this.state.data ? 
                 <List content={this.state.data}/>
                 : <div/>}

@@ -50,8 +50,8 @@ export default class Header extends React.Component {
                                 </div>
                                 :
                                 <div>
-                                <MenuItem> Sign In </MenuItem>
-                                <MenuItem> Sign Up </MenuItem>
+                                <MenuItem onClick={() => {window.location.href="/signin"}}> Sign In </MenuItem>
+                                <MenuItem onClick={() => {window.location.href="/signup"}}> Sign Up </MenuItem>
                                 </div>}
                             </Menu>
                         </div>

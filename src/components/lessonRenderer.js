@@ -1,11 +1,12 @@
 import * as React from 'react';
 import parseXml from '../controllers/xml';
 import { Title, Subtitle, Header, Subheader, Text, Code, Spoiler, Link, Authors } from './lessonRendererComponents.js';
-import { Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
+import { ApiRequest } from '../controllers/api';
 
 
 export default class LessonRenderer extends React.Component {
-    state = {};
+    state = {completed: false};
 
     parseEl = (el) => {
         if (typeof(el) === "string") return el;
@@ -49,6 +50,12 @@ export default class LessonRenderer extends React.Component {
         this.gen(this.props.data); 
     }
 
+    toggleCompleted = () => {
+        let completed = !this.state.completed;
+        this.setState({completed: completed});
+        ApiRequest(`completelesson/${this.props.lessonId}`, completed ? {completed: "True"} : {});
+    }
+
     render = () => {
         return (
             <div className="w-1/2 m-auto pb-24">
@@ -56,6 +63,10 @@ export default class LessonRenderer extends React.Component {
                     {this.state.renderedXML ?
                         this.state.renderedXML
                         : <div/> }
+                    <Button sx={{mt: 4}} onClick={this.toggleCompleted} variant="contained">
+                    {
+                        this.state.completed ? "Unmark Completed"
+                        : "Mark Completed" }</Button>
                 </Stack>
             </div>
         );
