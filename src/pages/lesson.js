@@ -29,7 +29,10 @@ export default class Lesson extends React.Component {
             <div>
                 <Header authenticated={this.state.user ? true : false}/>
                 {this.state.data ?
-                    <LessonRenderer data={this.state.data} lessonId={this.state.lessonId}/>
+                    <LessonRenderer
+                        data={this.state.data}
+                        lessonId={this.state.lessonId}
+                        completed={this.state.user.completedLessons.find(v => v === this.state.lessonId) ? true : false}/>
                 : <div/>}
             </div>
         );

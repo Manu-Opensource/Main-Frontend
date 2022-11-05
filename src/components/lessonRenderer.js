@@ -8,6 +8,11 @@ import { ApiRequest } from '../controllers/api';
 export default class LessonRenderer extends React.Component {
     state = {completed: false};
 
+    constructor(props) {
+        super(props);
+        this.state.completed = props.completed;
+    }
+
     parseEl = (el) => {
         if (typeof(el) === "string") return el;
         let children = el.children.map(child => {return this.parseEl(child)});
