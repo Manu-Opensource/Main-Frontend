@@ -3,7 +3,7 @@ import Header from '../components/header';
 import List from '../components/list';
 import { ApiRequest } from '../controllers/api';
 import parseXml from '../controllers/xml';
-import { getUserData } from '../controllers/auth';
+import { getUserData, loggedIn } from '../controllers/auth';
 import { Stack, Typography, Divider } from '@mui/material';
 import CircularProgressWithText from '../components/circularProgressWithText';
 
@@ -16,7 +16,11 @@ export default class Course extends React.Component {
     getData = async () => {
         let courseId = window.location.href.split("/").at(-1);
         let course = await (await ApiRequest(`course/${courseId}`)).json();
-        let completedLessons = (await getUserData()).completedLessons;
+        let completedLessons = [];
+        let isLoggedIn = await loggedIn();
+        if (isLoggedIn)
+            completedLessons = (await getUserData()).completedLessons;
+
 
         let obj = parseXml(course.lessons);
         let completedCount = 0;
@@ -34,6 +38,7 @@ export default class Course extends React.Component {
 
         let completionPercent = completedCount / obj.children[0].children.length * 100;
         return {
+            loggedIn: isLoggedIn,
             lessons: lessons,
             name: course.name,
             completionPercent: completionPercent,
@@ -42,7 +47,9 @@ export default class Course extends React.Component {
     }
 
     componentDidMount = async () => {
-        this.setState({data: await this.getData(), user: await getUserData()});
+        this.setState({data: await this.getData()});
+        if (await loggedIn())
+            this.setState({user: await getUserData()});
     }
 
     render = () => {
@@ -62,10 +69,14 @@ export default class Course extends React.Component {
                             <Typography variant="h3" color="#FFFFFF"> About Course </Typography>
 
                             <Typography variant="h5" color="#FFFFFF" className="mt-24"> {this.state.data.description} </Typography>
-                            <Typography variant="h3" color="#FFFFFF" className="gap-8"> Progress </Typography>
-                            <div className="mt-4">
-                                <CircularProgressWithText value={this.state.data.completionPercent}/>
-                            </div>
+                            {this.state.data.loggedIn ?
+                                <>
+                                <Typography variant="h3" color="#FFFFFF" className="gap-8"> Progress </Typography>
+                                <div className="mt-4">
+                                    <CircularProgressWithText value={this.state.data.completionPercent}/>
+                                </div>
+                                </>
+                            : <div/>}
                         </div>
                         <List content={this.state.data.lessons} />
                     </div>

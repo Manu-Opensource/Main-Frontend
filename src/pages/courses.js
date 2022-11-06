@@ -2,7 +2,7 @@ import * as React from 'react';
 import Header from '../components/header';
 import List from '../components/list';
 import { ApiRequest } from '../controllers/api';
-import { getUserData } from '../controllers/auth';
+import { getUserData, loggedIn } from '../controllers/auth';
 
 
 export default class Courses extends React.Component {
@@ -24,7 +24,9 @@ export default class Courses extends React.Component {
     }
 
     componentDidMount = async () => {
-        this.setState({data: await this.getData(), user: await getUserData()});
+        this.setState({data: await this.getData()});
+        if (await loggedIn())
+            this.setState({user: await getUserData()});
     }
 
     render = () => {
