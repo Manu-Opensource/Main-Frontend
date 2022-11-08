@@ -13,30 +13,29 @@ export default class LessonRenderer extends React.Component {
         this.state.completed = props.completed;
     }
 
-    parseEl = (el) => {
+    parseEl = (el, i) => {
         if (typeof(el) === "string") return el;
-        let children = el.children.map(child => {return this.parseEl(child)});
+        let children = el.children.map(child => {return this.parseEl(child, i * 10000)});
         switch(el.name) {
             case "Title":
-                return ( <Title>{children}</Title> )
+                return ( <Title key={i}>{children}</Title> )
             //case "Subtitle":
             //    return ( <Subtitle>{children}</Subtitle> )
             case "Header":
-                return ( <Header>{children}</Header> )
+                return ( <Header key={i}>{children}</Header> )
             //case "Subheader":
             //    return ( <Subheader>{children}</Subheader> )
             case "Text":
-                return ( <Text>{children}</Text> )
+                return ( <Text key={i}>{children}</Text> )
             case "Code":
-                return ( <Code language={el.attributes.lang}>{children}</Code> )
+                return ( <Code key={i} language={el.attributes.lang}>{children}</Code> )
             case "Link":
-                return ( <Link href={el.children[0]} target="_blank" rel="noreferrer">{children}</Link> )
+                return ( <Link key={i} href={el.children[0]} target="_blank" rel="noreferrer">{children}</Link> )
             case "Spoiler":
-                return ( <Spoiler> {children} </Spoiler> )
+                return ( <Spoiler key={i}> {children} </Spoiler> )
             case "Authors":
-                return ( <Authors> {children} </Authors> )
+                return ( <Authors key={i}> {children} </Authors> )
             default:
-                console.log(el.name);
                 return null
         }
     }
@@ -44,9 +43,10 @@ export default class LessonRenderer extends React.Component {
     gen = (xmlString) => {
         let generated = [];
         let tree = parseXml(xmlString).children[0].children;
-        console.log(tree)
+        let i = 1;
         tree.forEach(el => {
-            generated.push(this.parseEl(el));
+            generated.push(this.parseEl(el, i));
+            i++;
         });
         this.setState({renderedXML: generated});
     }

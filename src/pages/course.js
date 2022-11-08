@@ -3,7 +3,7 @@ import Header from '../components/header';
 import List from '../components/list';
 import { ApiRequest } from '../controllers/api';
 import parseXml from '../controllers/xml';
-import { getUserData, loggedIn } from '../controllers/auth';
+import { getUserData } from '../controllers/auth';
 import { Stack, Typography, Divider } from '@mui/material';
 import CircularProgressWithText from '../components/circularProgressWithText';
 
@@ -17,10 +17,8 @@ export default class Course extends React.Component {
         let courseId = window.location.href.split("/").at(-1);
         let course = await (await ApiRequest(`course/${courseId}`)).json();
         let completedLessons = [];
-        let isLoggedIn = await loggedIn();
-        if (isLoggedIn)
-            completedLessons = (await getUserData()).completedLessons;
-
+        let userData = await getUserData();
+        if (userData) completedLessons = userData.completedLessons;
 
         let obj = parseXml(course.lessons);
         let completedCount = 0;
@@ -38,7 +36,7 @@ export default class Course extends React.Component {
 
         let completionPercent = completedCount / obj.children[0].children.length * 100;
         return {
-            loggedIn: isLoggedIn,
+            userData: userData,
             lessons: lessons,
             name: course.name,
             completionPercent: completionPercent,
@@ -48,16 +46,12 @@ export default class Course extends React.Component {
 
     componentDidMount = async () => {
         this.setState({data: await this.getData()});
-        if (await loggedIn())
-            this.setState({user: await getUserData()});
     }
 
     render = () => {
-        if (this.state.data)
-            console.log(this.state.data.completionPercent);
         return (
             <>
-                <Header authenticated={this.state.user ? true : false}/>
+                <Header authenticated={this.state.data?.userData ? true : false}/>
                 {this.state.data ?
                 <div>
                     <Stack className="text-center mb-8 mt-4">
@@ -69,7 +63,7 @@ export default class Course extends React.Component {
                             <Typography variant="h3" color="#FFFFFF"> About Course </Typography>
 
                             <Typography variant="h5" color="#FFFFFF" className="mt-24"> {this.state.data.description} </Typography>
-                            {this.state.data.loggedIn ?
+                            {this.state.data.userData ?
                                 <>
                                 <Typography variant="h3" color="#FFFFFF" className="gap-8"> Progress </Typography>
                                 <div className="mt-4">

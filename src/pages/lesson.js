@@ -16,19 +16,17 @@ export default class Lesson extends React.Component {
 
         let xmlString = lesson.content;
 
-        this.setState({data: xmlString, lessonId: lessonId});
+        this.setState({data: xmlString, lessonId: lessonId, userData: await getUserData()});
     }
 
     componentDidMount = async() => {
         this.getData();
-        if (loggedIn())
-            this.setState({user: await getUserData()});
     }
 
     render = () => {
         return ( 
             <div>
-                <Header authenticated={this.state.user ? true : false}/>
+                <Header authenticated={this.state.userData ? true : false}/>
                 {this.state.data ?
                     <LessonRenderer
                         data={this.state.data}

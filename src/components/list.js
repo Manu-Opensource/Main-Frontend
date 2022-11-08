@@ -8,11 +8,12 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 export default class List extends React.Component {
     render = () => {
         if (!this.props.content) return (<div/>);
+        let i = 1;
         return ( 
             <div className="flex flex-col justify-center">
                 {this.props.content.map(listEntry => {
                     return (
-                        <div className="mt-4 bg-[#212121] m-auto w-[15vw] flex flex-col justify-center text-center p-2 rounded">
+                        <div key={i++} className="mt-4 bg-[#212121] m-auto w-[15vw] flex flex-col justify-center text-center p-2 rounded">
                         {/* <div className="flex flex-row justify-center content-center text-center"> */}
                         <div className="grid grid-cols-2 w-full content-center justify-items-center items-center">
                                 <Typography variant="h5" color="#FFFFFF" sx={{ mt: 2 }} >
