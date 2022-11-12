@@ -90,6 +90,50 @@ export class Spoiler extends React.Component {
     }
 }
 
+export class Question extends React.Component {
+    state = {
+        hidden: true
+    }
+
+    render = () => {
+        return (
+            <div className="bg-[#212121] p-6 rounded-lg mt-4">
+                <Stack>
+                    <Typography variant="h6" color="#FFFFFF"> {this.props.name} </Typography>
+                    {this.props.children}
+                </Stack>
+            </div>
+        );
+    }
+}
+
+export class Choice extends React.Component {
+    state = {
+        answered: 0 //0: unanswered, 1: incorrect, 2: correct
+    }
+
+    render = () => {
+        return (
+            <>
+            {this.state.answered != 0 ?
+            <Button variant="contained"
+                    sx={{ mt: 4, boxShadow: 3 }}
+                    onClick={() => {this.setState({answered: (this.props.correct === "true") + 1})}}
+                    color={this.state.answered == 2 ? "success" : "error"}>
+                    {this.props.children}
+            </Button>
+            : 
+            <Button variant="contained"
+                    sx={{ mt: 4, boxShadow: 3 }}
+                    onClick={() => {this.setState({answered: (this.props.correct === "true") + 1})}}>
+                    {this.props.children}
+            </Button>
+            }
+            </>
+        );
+    }
+}
+
 export class Authors extends React.Component {
     render = () => {
         return (

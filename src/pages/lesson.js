@@ -31,7 +31,7 @@ export default class Lesson extends React.Component {
                     <LessonRenderer
                         data={this.state.data}
                         lessonId={this.state.lessonId}
-                        completed={this.state.user && this.state.user.completedLessons.find(v => v === this.state.lessonId) ? true : false}/>
+                        completed={this.state.userData && this.state.userData.completedLessons.find(v => v === this.state.lessonId) ? true : false}/>
                 : <div/>}
             </div>
         );

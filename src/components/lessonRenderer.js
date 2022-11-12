@@ -1,21 +1,20 @@
 import * as React from 'react';
 import parseXml from '../controllers/xml';
-import { Title, Subtitle, Header, Subheader, Text, Code, Spoiler, Link, Authors } from './lessonRendererComponents.js';
+import { Title, Choice, Header, Question, Text, Code, Spoiler, Link, Authors } from './lessonRendererComponents.js';
 import { Button, Stack } from '@mui/material';
 import { ApiRequest } from '../controllers/api';
 
 
 export default class LessonRenderer extends React.Component {
-    state = {completed: false};
-
+    state = {};
     constructor(props) {
         super(props);
-        this.state.completed = props.completed;
     }
 
     parseEl = (el, i) => {
         if (typeof(el) === "string") return el;
-        let children = el.children.map(child => {return this.parseEl(child, i * 10000)});
+        let children = el.children.map(child => {return this.parseEl(child, i++ * 10000)});
+        i -= el.children.length;
         switch(el.name) {
             case "Title":
                 return ( <Title key={i}>{children}</Title> )
@@ -23,6 +22,10 @@ export default class LessonRenderer extends React.Component {
             //    return ( <Subtitle>{children}</Subtitle> )
             case "Header":
                 return ( <Header key={i}>{children}</Header> )
+            case "Question":
+                return ( <Question name={el.attributes.name} key={i}>{children}</Question> );
+            case "Choice":
+                return ( <Choice correct={el.attributes.correct} key={i}>{children}</Choice> );
             //case "Subheader":
             //    return ( <Subheader>{children}</Subheader> )
             case "Text":
@@ -53,6 +56,7 @@ export default class LessonRenderer extends React.Component {
 
     componentDidMount = () => {
         this.gen(this.props.data); 
+        this.setState({completed: this.props.completed});
     }
 
     toggleCompleted = () => {
