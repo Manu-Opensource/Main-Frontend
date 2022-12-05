@@ -32,7 +32,6 @@ export default class Course extends React.Component {
                 completed: completed
             }
         });
-        lessons = lessons.concat(lessons);
 
         let completionPercent = completedCount / obj.children[0].children.length * 100;
         return {

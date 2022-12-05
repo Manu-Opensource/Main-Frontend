@@ -14,7 +14,7 @@ export default function parseXml(xmlString) {
             let isClosing = xmlString[index] === '/'
             let name = "";
             if (isClosing) index++;
-            while (xmlString[index] !== '>') {
+            while (xmlString[index] !== '>' && xmlString[index-1] !== '\\') {
                 name += xmlString[index];
                 index++;
             }
@@ -42,7 +42,9 @@ export default function parseXml(xmlString) {
             }
         } else {
             let str = "";
-            while (xmlString[index] !== '<') {
+            while (!(xmlString[index] === '<' && xmlString[index-1] !== '\\'))  {
+                if (xmlString[index-1] == '\\')
+                    str = str.substring(0, str.length - 1);
                 str += xmlString[index];
                 index++;
             }
