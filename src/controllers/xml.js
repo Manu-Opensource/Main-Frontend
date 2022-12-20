@@ -5,6 +5,7 @@
 //  Some Text
 //</MyElement>
 export default function parseXml(xmlString) {
+    xmlString = xmlString.trim();
     let index = 0;
     let stack = [];
     stack.push({children: [], attributes: []});

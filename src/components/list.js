@@ -15,14 +15,16 @@ export default class List extends React.Component {
                     return (
                         <div key={i++} className="mt-4 bg-[#212121] m-auto w-[15vw] flex flex-col justify-center text-center p-2 rounded">
                         {/* <div className="flex flex-row justify-center content-center text-center"> */}
-                        <div className="grid grid-cols-2 w-full content-center justify-items-center items-center">
+                        <div className={`grid ${!this.props.disableCompletion ? "grid-cols-2" : ""} w-full content-center justify-items-center items-center`}>
                                 <Typography variant="h5" color="#FFFFFF" sx={{ mt: 2 }} >
                                     {listEntry.title}
                                 </Typography>
-                                {listEntry.completed ?
-                                    <CheckCircleOutlineIcon color="success" fontSize="large"/>                                
-                                : 
-                                    <CancelOutlinedIcon color="error" fontSize="large"/>}
+                                {this.props.disableCompletion ? <div/> 
+                                :
+                                    (listEntry.completed ?
+                                        <CheckCircleOutlineIcon color="success" fontSize="large"/>                                : 
+                                        <CancelOutlinedIcon color="error" fontSize="large"/>)
+                                }
                             </div>
                             <Button variant="contained" sx={{ mt: 2 }} href={listEntry.href}>{listEntry.buttonText}</Button>
                         </div>

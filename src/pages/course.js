@@ -15,25 +15,26 @@ export default class Course extends React.Component {
     
     getData = async () => {
         let courseId = window.location.href.split("/").at(-1);
-        let course = await (await ApiRequest(`course/${courseId}`)).json();
+        let course = await (await ApiRequest(`courses/${courseId}.xml`, {_gh: true})).text();
         let completedLessons = [];
         let userData = await getUserData();
         if (userData) completedLessons = userData.completedLessons;
 
-        let obj = parseXml(course.lessons);
+        let obj = parseXml(course);
+        console.log(obj);
         let completedCount = 0;
-        let lessons = obj.children[0].children.map(lesson => {
+        let lessons = obj.children.map(lesson => {
             let completed = completedLessons.find(v => v == lesson.attributes.Id) ? true : false
             if (completed) completedCount++;
             return {
                 title: lesson.attributes.Name,
                 buttonText: "View Lesson",
-                href: `/lessons/${lesson.attributes.Id}`,
+                href: `/lessons/${lesson.attributes.Path + lesson.attributes.Id}`,
                 completed: completed
             }
         });
 
-        let completionPercent = completedCount / obj.children[0].children.length * 100;
+        let completionPercent = completedCount / obj.children.length * 100;
         return {
             userData: userData,
             lessons: lessons,
