@@ -6,7 +6,6 @@ This is still a very early WIP, with most features not working.
 
 The project is open source under the GNU General Public License.
 
-
 ## The AP Self Study Project
 
 The AP Self Study Project is an under development a website containing resources and lessons for people to self study AP courses.
