@@ -23,24 +23,38 @@ export default class Course extends React.Component {
         let obj = parseXml(course);
         console.log(obj);
         let completedCount = 0;
-        let lessons = obj.children.map(lesson => {
-            let completed = completedLessons.find(v => v == lesson.attributes.Id) ? true : false
-            if (completed) completedCount++;
-            return {
-                title: lesson.attributes.Name,
-                buttonText: "View Lesson",
-                href: `/lessons/${lesson.attributes.Path + lesson.attributes.Id}`,
-                completed: completed
+        let courseInfo;
+        let sub = 0;
+        let lessons = obj.children.map(child => {
+            if (child.name === "Lesson") {
+                let completed = completedLessons.find(v => v == child.attributes.Id) ? true : false
+                if (completed) completedCount++;
+                return {
+                    title: child.attributes.Name,
+                    buttonText: "View Lesson",
+                    href: `/lessons/${child.attributes.Path + child.attributes.Id}`,
+                    completed: completed
+                }
+            } else if (child.name === "Header") {
+                sub++;
+                return {
+                    isHeader: true,
+                    title: child.attributes.Name,
+                }
+            } else if (child.name === "CourseInfo") {
+                courseInfo = child.children[0];
+                sub++;
             }
-        });
+            return null;
+        }).filter(l => {return l});
 
-        let completionPercent = completedCount / obj.children.length * 100;
+        let completionPercent = completedCount / (obj.children.length - sub) * 100;
         return {
             userData: userData,
             lessons: lessons,
             name: course.name,
             completionPercent: completionPercent,
-            description: course.description,
+            courseInfo: courseInfo,
         };
     }
 

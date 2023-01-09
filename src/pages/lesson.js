@@ -14,7 +14,7 @@ export default class Lesson extends React.Component {
     getData = async () => {
         let lessonPath = window.location.href.split("lessons/").at(-1);
         let lesson = await (await ApiRequest(`lessons/${lessonPath}.xml`, {_gh: true})).text();
-        let lessonId = lesson.split("/").at(-1);
+        let lessonId = lessonPath.split("/").at(-1);
 
         this.setState({data: lesson, lessonId: lessonId, userData: await getUserData()});
     }

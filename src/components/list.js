@@ -12,6 +12,16 @@ export default class List extends React.Component {
         return ( 
             <div className="flex flex-col justify-center">
                 {this.props.content.map(listEntry => {
+                    if (listEntry.isHeader) {
+                        return (
+                            <div key={i++} className="m-auto my-0 flex flex-col text-center w-[15vw]"> 
+                                <Typography variant="h4" color="#FFFFFF" >
+                                    {listEntry.title}
+                                </Typography>
+                                <div className="bg-[#ffffff] w-[15vw] h-1 rounded" /> 
+                            </div>
+                        );
+                    }
                     return (
                         <div key={i++} className="mt-4 bg-[#212121] m-auto w-[15vw] flex flex-col justify-center text-center p-2 rounded">
                         {/* <div className="flex flex-row justify-center content-center text-center"> */}
